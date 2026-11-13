@@ -102,6 +102,36 @@ folder, it named that line after three tool calls.
 
 </details>
 
+## Explore the rest of the story
+
+Every load and every click is an execution of its own, so the app tells its
+story one step at a time. Restart the app for a clean list, then after each step
+ask your agent what ran, or run `npm run ran`.
+
+1. **Load the page.** Only `head server` is listed with the page's code: `Page`,
+   `listTodos`, and `stillListed` returning at `if#0/then`, since nothing is
+   done yet. A page-only execution follows, where `Report` hands the watcher's
+   address to the browser.
+2. **Add a todo.** One execution with both heads. On the server, `add` passes
+   its empty-title check at `if#0/else`, `addTodo` runs, and the page renders
+   again. On the page, the rows render.
+3. **Tick the new todo.** Under `head page`, `TodoRow/onToggle`. Under
+   `head server`, `toggle` and `toggleTodo`, and `stillListed` reaching
+   `if#1/then`. That is the bug.
+4. **Fix it and tick another.** Change `<` to `>` in `lib/archive.ts`, reload,
+   and tick **Read the recording**. It stays on the list, crossed out, and
+   `stillListed` now ends at `if#1/else` and `if#1/after`:
+
+   ```bash
+   VARIANCE_AUTHORITY_VANTAGE=http://127.0.0.1:63623 npm run ran -- --name stillListed
+   ```
+
+   An execution from before the edit lists `lib/archive.ts` as a count without
+   names, because the file changed under it.
+
+At the end of the listing, under "Ran outside any request", come the modules
+that loaded before any request named them.
+
 ## The three lines that make it work
 
 | file | what it does |

@@ -1,0 +1,8 @@
+{
+  "mcpServers": {
+    "variance-live": {
+      "command": "npx",
+      "args": ["variance-authority-mcp", "--watch"]
+    }
+  }
+}

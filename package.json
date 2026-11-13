@@ -18,6 +18,7 @@
     "@types/react": "^19.3.0",
     "@types/react-dom": "^19.3.0",
     "@variance-authority/cli": "^0.32.0",
+    "@variance-authority/mcp": "^0.32.0",
     "@variance-authority/sense": "^0.32.0",
     "typescript": "^5.6.0"
   }
